@@ -72,6 +72,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment(), BaseFragmentCallbacks
         requireActivity().hideSoftKeyboard()
         onClick(it)
     }
+//    open fun onBackPressed() {}
 
     protected abstract fun onClick(view: View)
 

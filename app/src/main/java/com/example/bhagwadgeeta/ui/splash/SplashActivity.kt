@@ -1,5 +1,6 @@
 package com.example.bhagwadgeeta.ui.splash
 
+import android.content.Intent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -20,6 +21,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             }
 
             override fun onAnimationEnd(animation: Animation?) {
+//                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                startActivity(intent)
                 MainActivity.present(this@SplashActivity)
                 finish()
             }
