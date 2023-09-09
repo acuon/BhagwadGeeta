@@ -3,12 +3,15 @@ package com.example.bhagwadgeeta.base
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.example.bhagwadgeeta.data.pref.GeetaPreferences
 import com.example.bhagwadgeeta.utils.hideSoftKeyboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -35,12 +38,14 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
     protected open fun preInit() {
 
     }
+
     protected abstract fun setupView()
-    protected open fun bindViewEvents(){
+    protected open fun bindViewEvents() {
         requireNotNull(binding.root).setOnClickListener {
             hideSoftKeyboard()
         }
     }
+
     protected abstract fun bindViewModel()
 
     abstract fun getViewBinding(): B
@@ -50,13 +55,24 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
         onClick(it)
     }
 
+    protected inline infix fun <T> Flow<T>.bindTo(crossinline action: (T) -> Unit) {
+        with(this) {
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    collect { action(it) }
+                }
+            }
+        }
+    }
+
+
     protected abstract fun onClick(view: View)
 
-    fun runDelayed(delayMilliSec : Long,job: suspend () -> Unit) =
+    fun runDelayed(delayMilliSec: Long, job: suspend () -> Unit) =
         lifecycleScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 delay(delayMilliSec)
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     job.invoke()
                 }
             }

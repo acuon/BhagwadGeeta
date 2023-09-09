@@ -6,11 +6,12 @@ import android.view.animation.AnimationUtils
 import com.example.bhagwadgeeta.R
 import com.example.bhagwadgeeta.base.BaseActivity
 import com.example.bhagwadgeeta.databinding.ActivitySplashBinding
-import com.example.bhagwadgeeta.ui.MainActivity
+import com.example.bhagwadgeeta.ui.home.MainActivity
+import com.example.bhagwadgeeta.ui.home.viewmodel.GeetaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
+
     override fun setupView() {
         val fadeIn = AnimationUtils.loadAnimation(this, R.anim.splash_fade_in)
         fadeIn.setAnimationListener(object : Animation.AnimationListener {
