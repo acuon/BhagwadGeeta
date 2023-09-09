@@ -19,7 +19,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "BASE_URL", "\"" + getBaseUrl() + "\""
-        buildConfigField "String", "APP_KEY", "\"" + getAppKey() + "\""
+        buildConfigField "String", "API_KEY", "\"" + getApiKey() + "\""
+        buildConfigField "String", "API_HOST", "\"" + getApiHost() + "\""
     }
 
     buildTypes {
@@ -29,14 +30,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures {
         buildConfig true
+        dataBinding true
+        viewBinding true
     }
 }
 
@@ -92,7 +95,7 @@ static def getBaseUrl() {
     return props['BASE_URL']
 }
 
-static def getAppKey() {
+static def getApiKey() {
     Properties props = new Properties()
     props.load(new FileInputStream(new File('local.properties')))
     return props['APP_KEY']
