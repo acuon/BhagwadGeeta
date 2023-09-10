@@ -45,4 +45,3 @@ interface GeetaDao {
     @Query("UPDATE geeta_database SET favorite = :isFavorite WHERE id = :chapterId")
     fun updateChapterFavoriteStatus(chapterId: Int, isFavorite: Boolean)
 }
-

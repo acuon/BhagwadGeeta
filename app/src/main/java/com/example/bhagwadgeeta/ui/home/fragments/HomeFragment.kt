@@ -8,6 +8,7 @@ import com.example.bhagwadgeeta.databinding.FragmentHomeBinding
 import com.example.bhagwadgeeta.ui.home.viewmodel.GeetaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.bhagwadgeeta.R
 import com.example.bhagwadgeeta.ui.home.MainActivity
@@ -27,7 +28,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val TAG = "HomeFragment"
     override fun setupView() {
         (requireActivity() as MainActivity).toolbarName("Bhagwad Geeta")
-        viewModel.getAllChapters(Constants.CHAPTER_LIMIT)
         binding.rcvChapters.apply {
             verticalView(context)
             adapter = chapterAdapter
@@ -36,6 +36,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun bindViewModel() {
+        viewModel.networkConnectivityLiveData.observe(this, Observer { isConnected ->
+            if (isConnected) {
+                viewModel.getAllChapters(Constants.CHAPTER_LIMIT)
+            } else {
+                viewModel.allChaptersFromDB bindTo {
+                    chapterAdapter.list = it
+                }
+            }
+        })
         findNavController().currentBackStackEntry?.savedStateHandle?.run {
             getLiveData<Boolean>(Constants.REFRESH).observe(viewLifecycleOwner) {
                 if (it == true) {

@@ -1,6 +1,5 @@
 package com.example.bhagwadgeeta.ui.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.bhagwadgeeta.GeetaApp
 import com.example.bhagwadgeeta.base.BaseViewModel
@@ -9,21 +8,14 @@ import com.example.bhagwadgeeta.utils.network.ResultOf
 import com.example.bhagwadgeeta.ui.home.model.ChapterItem
 import com.example.bhagwadgeeta.ui.home.model.VerseItem
 import com.example.bhagwadgeeta.utils.network.NetworkConnectivityLiveData
-import dagger.assisted.Assisted
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 
 @HiltViewModel
@@ -35,9 +27,11 @@ class GeetaViewModel @Inject constructor(
     val allChapters: StateFlow<ResultOf<List<ChapterItem?>?>>
         get() = _allChapters
 
+    val allFavoriteChaptersFromDB: StateFlow<List<ChapterItem?>?> =
+        repository.getFavoriteChapters().asStateFlow(emptyList())
+
     val allChaptersFromDB: StateFlow<List<ChapterItem?>?> =
-        repository.getFavoriteChapters()
-            .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+        repository.getAllChaptersFromDatabase().asStateFlow(emptyList())
 
     private val _chapter = MutableStateFlow<ResultOf<ChapterItem?>>(ResultOf.Empty())
     val chapter: StateFlow<ResultOf<ChapterItem?>>
@@ -67,7 +61,7 @@ class GeetaViewModel @Inject constructor(
         getAllChapterFromApi(limit)
     }
 
-    private fun chaptersFromDatabase(): List<ChapterItem?>? {
+    fun loadChaptersFromDatabase(): List<ChapterItem?>? {
         return repository.getAllChaptersFromDatabase().asStateFlow(emptyList()).value
     }
 

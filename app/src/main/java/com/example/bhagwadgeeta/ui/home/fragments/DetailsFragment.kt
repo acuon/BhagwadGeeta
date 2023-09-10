@@ -59,9 +59,9 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>() {
     }
 
     fun openFavorites() {
-        findNavController().navigate(
-            R.id.action_detailsFragment_to_favoriteFragment
-        )
+        findNavController().run {
+            navigate(R.id.action_detailsFragment_to_favoriteFragment)
+        }
     }
 
     private fun callback(verseItem: VerseItem?) {

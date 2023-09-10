@@ -14,7 +14,6 @@ import com.example.bhagwadgeeta.ui.home.model.ChapterItem
 import com.example.bhagwadgeeta.ui.home.viewmodel.GeetaViewModel
 import com.example.bhagwadgeeta.utils.Constants
 import com.example.bhagwadgeeta.utils.GeetaSnackBar
-import com.example.bhagwadgeeta.utils.network.ResultOf
 import com.example.bhagwadgeeta.utils.verticalView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +31,6 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
             adapter = chapterAdapter
             if (itemDecorationCount == 0) addItemDecoration(itemDecoration(20, 20, 40, 40))
         }
-        chapterAdapter.list = listOf(ChapterItem(1, 1, "", ", ", ", ", "ff", ", ", ", ", ", ", 3))
     }
 
     override fun onResume() {
@@ -41,7 +39,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
     }
 
     override fun bindViewModel() {
-        viewModel.allChaptersFromDB bindTo {
+        viewModel.allFavoriteChaptersFromDB bindTo {
             Log.d("DATA", "${it}")
             chapterAdapter.list = it
         }

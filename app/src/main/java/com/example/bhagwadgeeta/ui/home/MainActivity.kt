@@ -17,6 +17,7 @@ import com.example.bhagwadgeeta.ui.home.viewmodel.GeetaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.bhagwadgeeta.ui.home.fragments.DetailsFragment
 import com.example.bhagwadgeeta.ui.home.fragments.VerseDetailsFragment
+import com.example.bhagwadgeeta.utils.Constants
 import com.example.bhagwadgeeta.utils.GeetaSnackBar
 
 @AndroidEntryPoint
@@ -36,6 +37,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.topAppBar)
+
+        viewModel.getAllChapters(Constants.CHAPTER_LIMIT)
 
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val inflater = menuInflater
@@ -57,7 +60,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_favorite -> {
-                val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
                 navHostFragment?.childFragmentManager?.fragments?.get(0)?.run {
                     when (this) {
                         is HomeFragment -> openFavorites()
