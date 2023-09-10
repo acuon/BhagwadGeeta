@@ -83,5 +83,5 @@ Here is the technology stack and libraries used in the Bhagwad Geeta app:
 
 ## Support
 
-If you encounter any issues or have questions, please feel free to contact us at [rohitshar8600@gmail.com](mailto:rohitshar800@gmail.com).
+If you encounter any issues or have questions, please feel free to contact me at [rohitshar8600@gmail.com](mailto:rohitshar800@gmail.com).
 
