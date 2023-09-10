@@ -5,8 +5,7 @@ Bhagwad Geeta App is a mobile application that provides a user-friendly interfac
 ## APK File
 
 You can download the APK file of the Bhagwad Geeta app from the following link:
-
-[Download Bhagwad Geeta APK](https://github.com/acuon/MathSolver/blob/main/files/apk)
+[Download Bhagwad Geeta APK](https://github.com/acuon/BhagwadGeeta/tree/main/files/apk)
 
 ## Screenshots
 <p align="center">
