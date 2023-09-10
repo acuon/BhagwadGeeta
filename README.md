@@ -18,7 +18,7 @@ You can download the APK file of the Bhagwad Geeta app from the following link:
 
 ## Demo
 
-[Watch Demo Video](https://drive.google.com/your_video_shareable_link)
+[Watch Demo Video](https://drive.google.com/drive/folders/1h6fmSlT8OAw2WysVZAJ_NXuOoHdjcBWj?usp=sharing)
 
 ## Installation
 
