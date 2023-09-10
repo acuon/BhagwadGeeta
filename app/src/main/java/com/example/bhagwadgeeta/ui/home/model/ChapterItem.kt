@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "chapters")
+@Entity(tableName = "geeta_database")
 data class ChapterItem(
     @PrimaryKey
     @ColumnInfo(name = "id")
@@ -30,4 +30,8 @@ data class ChapterItem(
     @ColumnInfo(name = "verses_count")
     val verses_count: Int? = null
 ) {
+
+    @ColumnInfo(name = "favorite")
+    var favorite: Boolean = false
+
 }

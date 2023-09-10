@@ -16,9 +16,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun setupView() {
         val fadeIn = AnimationUtils.loadAnimation(this, R.anim.splash_fade_in)
         fadeIn.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {
-
-            }
+            override fun onAnimationStart(animation: Animation?) {}
 
             override fun onAnimationEnd(animation: Animation?) {
 //                val intent = Intent(this@SplashActivity, MainActivity::class.java)
@@ -28,17 +26,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 finish()
             }
 
-            override fun onAnimationRepeat(animation: Animation?) {
-
-            }
+            override fun onAnimationRepeat(animation: Animation?) {}
 
         })
         binding.ivAppLogo.startAnimation(fadeIn)
     }
 
-    override fun bindViewModel() {
-
-    }
+    override fun bindViewModel() {}
 
     override fun getViewBinding() = ActivitySplashBinding.inflate(layoutInflater)
 

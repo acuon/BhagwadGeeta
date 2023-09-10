@@ -1,92 +1,104 @@
 package com.example.bhagwadgeeta.ui.home.fragments
 
-import android.graphics.Rect
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import com.example.bhagwadgeeta.base.BaseFragment
 import com.example.bhagwadgeeta.databinding.FragmentHomeBinding
 import com.example.bhagwadgeeta.ui.home.viewmodel.GeetaViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.activity.viewModels
-import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.example.bhagwadgeeta.R
-import com.example.bhagwadgeeta.network.ResultOf
+import com.example.bhagwadgeeta.ui.home.MainActivity
+import com.example.bhagwadgeeta.utils.network.ResultOf
 import com.example.bhagwadgeeta.ui.home.adapter.ChapterAdapter
 import com.example.bhagwadgeeta.ui.home.model.ChapterItem
+import com.example.bhagwadgeeta.utils.Constants
+import com.example.bhagwadgeeta.utils.GeetaSnackBar
 import com.example.bhagwadgeeta.utils.verticalView
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val viewModel: GeetaViewModel by activityViewModels()
-    private val chapterAdapter by lazy { ChapterAdapter(::callback) }
+    private val chapterAdapter by lazy { ChapterAdapter(::callback, ::favoriteCallback) }
 
+    private val TAG = "HomeFragment"
     override fun setupView() {
+        (requireActivity() as MainActivity).toolbarName("Bhagwad Geeta")
+        viewModel.getAllChapters(Constants.CHAPTER_LIMIT)
         binding.rcvChapters.apply {
             verticalView(context)
             adapter = chapterAdapter
-            addItemDecoration(itemDecorator)
-        }
-    }
-
-    private val itemDecorator by lazy {
-        object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(
-                outRect: Rect,
-                view: View,
-                parent: RecyclerView,
-                state: RecyclerView.State
-            ) {
-                with(outRect) {
-                    top = 20
-                    left = 40
-                    right = 40
-                    bottom = 20
-                }
-            }
+            if (itemDecorationCount == 0) addItemDecoration(itemDecoration(20, 20, 40, 40))
         }
     }
 
     override fun bindViewModel() {
         findNavController().currentBackStackEntry?.savedStateHandle?.run {
-            getLiveData<Boolean>("refresh").observe(viewLifecycleOwner) {
+            getLiveData<Boolean>(Constants.REFRESH).observe(viewLifecycleOwner) {
                 if (it == true) {
-                    viewModel.getAllChapters(18)
+//                    viewModel.getAllChapters(Constants.CHAPTER_LIMIT)
                 }
-                remove<Boolean>("refresh")
+                remove<Boolean>(Constants.REFRESH)
             }
         }
         viewModel.allChapters bindTo {
             when (it) {
                 is ResultOf.Progress -> {}
                 is ResultOf.Empty -> {
-                    Log.d("AllChapters", "Empty")
+                    Log.d(TAG, "API Call: allChapters - Empty")
                 }
 
                 is ResultOf.Success -> {
-                    Log.d("AllChapters", "Success ${it.value}")
+                    Log.d(TAG, "API Call: allChapters - Success ${it.value}")
                     chapterAdapter.list = it.value
                 }
 
                 is ResultOf.Failure -> {
-                    Log.d("AllChapters", "Failure")
+                    Log.d(TAG, "API Call: allChapters - Failure")
                 }
             }
         }
     }
 
-    private fun callback(chapter: ChapterItem?, type: Int) {
+    private fun callback(chapter: ChapterItem?) {
+        viewModel.sharedChapterData.value = chapter
+        if (viewModel.networkConnectivityLiveData.value == true) {
+            findNavController().navigate(
+                R.id.action_homeFragment_to_detailsFragment,
+                bundleOf(Constants.CHAPTER_ID to chapter?.id)
+            )
+        } else {
+            showSnackBar(
+                "Oops!, It seems you are not connected to internet",
+                GeetaSnackBar.SnackType.FAILURE
+            )
+        }
+    }
+
+    private fun favoriteCallback(chapterId: Int, isFavorite: Boolean) {
+        viewModel.updateChapterFavoriteStatus(chapterId, isFavorite)
+    }
+
+    fun openFavorites() {
         findNavController().navigate(
-            if (type == 0) R.id.action_homeFragment_to_detailsFragment else R.id.action_homeFragment_to_verseDetailsFragment,
-            bundleOf("chapterItem" to chapter?.id.toString())
+            R.id.action_homeFragment_to_favoriteFragment
         )
     }
 
-    override fun onClick(view: View) {
+    override fun bindViewEvents() {
+        super.bindViewEvents()
+        binding.apply {
+            readNow.setOnClickListener(onClickListener)
+        }
+    }
 
+    override fun onClick(view: View) {
+        when (view) {
+//            binding.readNow -> callback()
+        }
     }
 
     override fun getViewBinding() = FragmentHomeBinding.inflate(layoutInflater)

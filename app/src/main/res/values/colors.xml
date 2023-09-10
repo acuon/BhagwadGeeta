@@ -3,5 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#FF4537</color>
+    <color name="light_orange">#FF6C61</color>
     <color name="grey">#393939</color>
+    <color name="transparent">#00000000</color>
+    <color name="light_brown">#C9AB81</color>
+
+    <color name="green">#24c4b6</color>
+    <color name="snackColorGreen">#30D073</color>
+    <color name="snackColorRed">#EB5757</color>
+    <color name="snackColorYellow">#FF9800</color>
 </resources>

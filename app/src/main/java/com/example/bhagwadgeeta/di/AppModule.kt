@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.room.Room
 import com.example.bhagwadgeeta.BuildConfig
+import com.example.bhagwadgeeta.GeetaApp
 import com.example.bhagwadgeeta.data.database.GeetaDao
 import com.example.bhagwadgeeta.data.database.GeetaDatabase
 import com.example.bhagwadgeeta.data.remote.GeetaService
@@ -12,6 +13,7 @@ import com.example.bhagwadgeeta.ui.home.viewmodel.GeetaViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

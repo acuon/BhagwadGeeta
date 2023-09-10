@@ -1,4 +1,4 @@
-package com.example.bhagwadgeeta.network
+package com.example.bhagwadgeeta.utils.network
 
 
 sealed class ResultOf<out T> {

@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.example.bhagwadgeeta.data.pref.GeetaPreferences
+import com.example.bhagwadgeeta.utils.GeetaSnackBar
 import com.example.bhagwadgeeta.utils.hideSoftKeyboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -18,7 +19,7 @@ import kotlinx.coroutines.withContext
 abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
 
     lateinit var binding: B
-
+    private var snackBar: GeetaSnackBar? = null
     val pref by lazy { GeetaPreferences() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +54,24 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
     protected val onClickListener = View.OnClickListener {
         hideSoftKeyboard()
         onClick(it)
+    }
+
+    protected fun showSnackBar(message: String?, type: GeetaSnackBar.SnackType) {
+        binding.root.let {
+            snackBar = GeetaSnackBar
+                .Builder()
+                .type(type)
+                .message(message)
+                .setCallBack(snackListener)
+                .make(it)
+                .showSnack()
+        }
+    }
+
+    private val snackListener = object : GeetaSnackBar.Builder.ISnackListener {
+        override fun onClosed(view: View) {
+            snackBar?.dismiss()
+        }
     }
 
     protected inline infix fun <T> Flow<T>.bindTo(crossinline action: (T) -> Unit) {

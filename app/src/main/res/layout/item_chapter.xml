@@ -22,19 +22,32 @@
 
             <TextView
                 android:id="@+id/chapter_number"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/centra_no2"
                 android:textColor="@color/orange"
                 android:textSize="15sp"
                 android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Chapter 1" />
+
+            <ImageView
+                android:id="@+id/add_to_favorite"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_favorite"
+                app:layout_constraintBottom_toBottomOf="@id/chapter_number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/chapter_number"
+                tools:src="@drawable/ic_favorite_filled" />
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:fontFamily="@font/centra_no2_medium"
                 android:textColor="@color/black"
                 android:textSize="17sp"
                 android:textStyle="bold"
@@ -47,6 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/centra_no2"
+                android:justificationMode="inter_word"
                 android:maxLines="4"
                 android:textColor="@color/grey"
                 app:layout_constraintTop_toBottomOf="@id/name"
@@ -61,16 +76,18 @@
                 app:layout_constraintTop_toBottomOf="@id/description">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginEnd="5dp"
-                    android:background="@drawable/ic_verse" />
+                    android:background="@drawable/ic_list" />
 
                 <TextView
                     android:id="@+id/verse_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/centra_no2"
                     android:textColor="@color/black"
                     tools:text="74" />
 
@@ -78,6 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/centra_no2"
                     android:text="@string/verses"
                     android:textColor="@color/black"
                     tools:text=" verses" />

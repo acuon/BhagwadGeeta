@@ -5,7 +5,7 @@
     android:id="@+id/nav_home"
     app:startDestination="@id/homeFragment">
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.bhagwadgeeta.ui.home.fragments.HomeFragment"
         android:label="HomeFragment"
@@ -14,11 +14,11 @@
             android:id="@+id/action_homeFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_verseDetailsFragment"
-            app:destination="@id/verseDetailsFragment" />
-    </keep_state_fragment>
+            android:id="@+id/action_homeFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+    </fragment>
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.bhagwadgeeta.ui.home.fragments.DetailsFragment"
         android:label="fragment_details"
@@ -27,18 +27,27 @@
             android:id="@+id/action_detailsFragment_to_verseDetailsFragment"
             app:destination="@id/verseDetailsFragment" />
         <action
-            android:id="@+id/action_detailsFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </keep_state_fragment>
+            android:id="@+id/action_detailsFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+    </fragment>
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/verseDetailsFragment"
         android:name="com.example.bhagwadgeeta.ui.home.fragments.VerseDetailsFragment"
         android:label="fragment_verse_details"
-        tools:layout="@layout/fragment_verse_details" >
+        tools:layout="@layout/fragment_verse_details">
         <action
-            android:id="@+id/action_verseDetailsFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </keep_state_fragment>
+            android:id="@+id/action_verseDetailsFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.bhagwadgeeta.ui.home.fragments.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
 </navigation>
